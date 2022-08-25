@@ -1,0 +1,65 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: red;
+  background-image: linear-gradient(30deg, lightgreen 45%, skyblue 45%);
+  background-size: 100% 100vh;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  font-size: 1.2rem;
+}
+
+div.main {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: whitesmoke;
+  padding: 15px 20px;
+  border-radius: 30px;
+  box-shadow: 0px 0px 20px 10px black;
+}
+
+div.main h2 {
+  text-align: center;
+}
+
+div.main hr {
+  border: none;
+  border-bottom: 5px dotted black;
+  margin: 10px 0;
+}
+
+div.main ul li {
+  list-style: none;
+  margin: 15px 0;
+}
+
+div.main ul input {
+  margin-right: 15px;
+}
+
+form input[type="text"] {
+  font-size: 1.2rem;
+  text-align: center;
+  border-radius: 20px;
+  padding: 10px 0;
+}
+
+form button {
+  background-color: #067bff;
+  padding: 5px 15px;
+  font-size: x-large;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 500ms linear all;
+}
+
+form button:hover {
+  background-color: rgb(60, 188, 60);
+}
