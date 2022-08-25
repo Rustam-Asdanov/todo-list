@@ -67,3 +67,11 @@ form button:hover {
 .cross-out {
   text-decoration: line-through;
 }
+
+a.delete-task {
+  text-decoration: none;
+  background-color: crimson;
+  color: white;
+  border-radius: 50%;
+  padding: 0 10px;
+}

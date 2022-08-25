@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-module.exports = { addTask, getAllTasks };
+module.exports = { addTask, getAllTasks, deleteTask };
 
 mongoose.connect(
   "mongodb://127.0.0.1:27017/shopDB?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.5.1",
@@ -11,6 +11,7 @@ mongoose.connect(
 
 const taskSchema = new mongoose.Schema({
   name: String,
+  compleated: Boolean,
 });
 
 const Task = mongoose.model("Task", taskSchema);
@@ -18,26 +19,28 @@ const Task = mongoose.model("Task", taskSchema);
 function addTask(taskName) {
   const taskOne = new Task({
     name: taskName,
+    compleated: false,
   });
 
   taskOne.save();
 }
 
 async function getAllTasks() {
-  // let myTasks = Task.find((err, task) => {
-  //   if (err) {
-  //     return err;
-  //   } else {
-  //     return task;
-  //   }
-  // }).exec();
-
   let myTasks = await Task.find({})
     .exec()
     .then((elem) => {
       return elem;
     });
 
-  console.log(myTasks);
   return myTasks;
+}
+
+function deleteTask(taskId) {
+  Task.deleteOne({ _id: taskId }, (err) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("success");
+    }
+  });
 }

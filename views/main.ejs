@@ -12,25 +12,17 @@
       <h2>Friday, October 19</h2>
       <hr />
       <ul>
-        <li>
-          <input type="checkbox" onclick="boxClick(this)"/>
-          <span>Buy Food</span>
-        </li>
-        <li>
-          <input type="checkbox" onclick="boxClick(this)"/>
-          <span>Buy Food</span>
-        </li>
-        <li>
-          <input type="checkbox" onclick="boxClick(this)"/>
-          <span>Buy Food</span>
-        </li>
-
         <% tasks.forEach(function(task){ %>
         <li>
-            <input type="checkbox" onclick="boxClick(this)"/>
-            <span>
+            <input type="checkbox" onclick="boxClick(this)" 
+            <%= task.compleated ? "checked" : ""  %>
+            />
+            <span 
+            <%= task.compleated ? "class=cross-out" : "" %>
+            >
                 <%= task.name %>
             </span>
+            <a href="/delete/<%= task._id %>" class="delete-task">X</a>
           </li>
           <% }); %>
       </ul>

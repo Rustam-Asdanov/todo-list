@@ -22,6 +22,13 @@ app.post("/", (req, res) => {
   res.redirect("/");
 });
 
+app.get("/delete/:ID", (req, res) => {
+  const deleteId = req.params.ID;
+  console.log(deleteId);
+  dataBase.deleteTask(deleteId);
+  res.redirect("/");
+});
+
 app.listen(port, () => {
   console.log(`Server listen on port ${port}`);
 });
