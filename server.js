@@ -29,6 +29,13 @@ app.get("/delete/:ID", (req, res) => {
   res.redirect("/");
 });
 
+app.get("/update/:condition/:ID", (req, res) => {
+  const taskId = req.params.ID;
+  const condition = req.params.condition;
+  dataBase.updateTask(taskId, condition);
+  res.redirect("/");
+});
+
 app.listen(port, () => {
   console.log(`Server listen on port ${port}`);
 });

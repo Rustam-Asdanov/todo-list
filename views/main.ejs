@@ -14,10 +14,13 @@
       <ul>
         <% tasks.forEach(function(task){ %>
         <li>
-            <input type="checkbox" onclick="boxClick(this)" 
+            <input 
+            type="checkbox" 
+            onclick="boxClick(this)"
+            value="<%= task._id %>"
             <%= task.compleated ? "checked" : ""  %>
             />
-            <span 
+            <span ondblclick="editTask()"
             <%= task.compleated ? "class=cross-out" : "" %>
             >
                 <%= task.name %>
@@ -36,10 +39,11 @@
         function boxClick(elem){
             if(elem.checked){
                 elem.nextElementSibling.classList.add("cross-out");
+                window.open("/update/true/"+elem.value, "_self");
             } else {
                 elem.nextElementSibling.classList.remove("cross-out");
+                window.open("/update/false/"+elem.value,"_self")
             }
-           
         }
     </script>
   </body>
