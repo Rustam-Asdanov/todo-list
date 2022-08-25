@@ -63,3 +63,7 @@ form button {
 form button:hover {
   background-color: rgb(60, 188, 60);
 }
+
+.cross-out {
+  text-decoration: line-through;
+}
