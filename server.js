@@ -36,6 +36,13 @@ app.get("/update/:condition/:ID", (req, res) => {
   res.redirect("/");
 });
 
+app.post("/updateTask", (req, res) => {
+  const taskId = req.body.button;
+  const taskName = req.body.task;
+  dataBase.updateTaskName(taskId, taskName);
+  res.redirect("/");
+});
+
 app.listen(port, () => {
   console.log(`Server listen on port ${port}`);
 });

@@ -20,18 +20,24 @@
             value="<%= task._id %>"
             <%= task.compleated ? "checked" : ""  %>
             />
-            <span ondblclick="editTask()"
+            <span ondblclick="editTask(this)"
             <%= task.compleated ? "class=cross-out" : "" %>
             >
                 <%= task.name %>
             </span>
+
+            <form action="/updateTask" method="post" class="update-form">
+              <input type="text" name="task" value="<%= task.name %>">
+              <button type="submit" name="button" value="<%= task._id %>">Save</button>
+            </form>
+
             <a href="/delete/<%= task._id %>" class="delete-task">X</a>
           </li>
           <% }); %>
       </ul>
       <hr />
       <form action="/" method="post">
-        <input type="text" name="taskName" id="" placeholder="task"/>
+        <input type="text" name="taskName" id="" placeholder="task" autofocus/>
         <button type="submit">+</button>
       </form>
     </section>
@@ -44,6 +50,10 @@
                 elem.nextElementSibling.classList.remove("cross-out");
                 window.open("/update/false/"+elem.value,"_self")
             }
+        }
+
+        function editTask(elem){
+          elem.nextElementSibling.style.display = "inline-block";
         }
     </script>
   </body>

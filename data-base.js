@@ -1,5 +1,11 @@
 const mongoose = require("mongoose");
-module.exports = { addTask, getAllTasks, deleteTask, updateTask };
+module.exports = {
+  addTask,
+  getAllTasks,
+  deleteTask,
+  updateTask,
+  updateTaskName,
+};
 
 mongoose.connect(
   "mongodb://127.0.0.1:27017/shopDB?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.5.1",
@@ -47,6 +53,16 @@ function deleteTask(taskId) {
 
 function updateTask(taskId, condition) {
   Task.updateOne({ _id: taskId }, { compleated: condition }, (err) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("Successfully updated");
+    }
+  });
+}
+
+function updateTaskName(taskId, taskName) {
+  Task.updateOne({ _id: taskId }, { name: taskName }, (err) => {
     if (err) {
       console.log(err);
     } else {
