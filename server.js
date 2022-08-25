@@ -9,11 +9,9 @@ app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const myArray = ["hello", "it is", "me"];
-
 app.get("/", async (req, res) => {
   const myArray = await dataBase.getAllTasks();
-  res.render("main", { tasks: myArray });
+  res.render("main", { date: dataBase.getCurrentDate(), tasks: myArray });
 });
 
 app.post("/", (req, res) => {

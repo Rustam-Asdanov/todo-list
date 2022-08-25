@@ -5,6 +5,7 @@ module.exports = {
   deleteTask,
   updateTask,
   updateTaskName,
+  getCurrentDate,
 };
 
 mongoose.connect(
@@ -69,4 +70,38 @@ function updateTaskName(taskId, taskName) {
       console.log("Successfully updated");
     }
   });
+}
+
+function getCurrentDate() {
+  const today = new Date();
+  const weekday = new Array(
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
+  );
+
+  const months = new Array(
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  );
+
+  const currentWeekday = weekday[today.getDay()];
+  const currentDayOfMonth = today.getDate();
+  const currentMonth = months[today.getMonth()];
+
+  return `${currentWeekday}, ${currentMonth} ${currentDayOfMonth}`;
 }
