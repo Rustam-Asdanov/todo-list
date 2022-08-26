@@ -9,10 +9,12 @@
   </head>
   <body>
     <div class="main">
+      <!-- Date -->
       <h2>
         <%= date %>
       </h2>
       <hr />
+      <!-- my tasks -->
       <ul>
         <% tasks.forEach(function(task){ %>
         <li>
@@ -38,8 +40,9 @@
           <% }); %>
       </ul>
       <hr />
+      <!-- form for adding task -->
       <form action="/" method="post">
-        <input type="text" name="taskName" id="" placeholder="task" autofocus/>
+        <input type="text" name="taskName" id="" placeholder="task" autocomplete="off" autofocus/>
         <button type="submit">+</button>
       </form>
     </section>
