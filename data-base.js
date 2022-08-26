@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 module.exports = {
   addTask,
   getAllTasks,
+  getAllTaskType,
   deleteTask,
   updateTask,
   updateTaskName,
@@ -18,28 +19,35 @@ mongoose.connect(
 
 const taskSchema = new mongoose.Schema({
   name: String,
+  taskType: String,
   compleated: Boolean,
 });
 
 const Task = mongoose.model("Task", taskSchema);
 
-function addTask(taskName) {
+function addTask(taskName, taskTypeName) {
   const taskOne = new Task({
     name: taskName,
+    taskType: taskTypeName,
     compleated: false,
   });
 
   taskOne.save();
 }
 
-async function getAllTasks() {
-  let myTasks = await Task.find({})
+async function getAllTasks(taskTypeName) {
+  let myTasks = await Task.find({ taskType: taskTypeName })
     .exec()
     .then((elem) => {
       return elem;
     });
 
   return myTasks;
+}
+
+async function getAllTaskType() {
+  const myTaskType = await Task.find().distinct("taskType");
+  return myTaskType;
 }
 
 function deleteTask(taskId) {

@@ -8,7 +8,29 @@
     <link rel="stylesheet" href="/css/style.css" />
   </head>
   <body>
+
+    <form action="/" method="get">
+      <select name="taskType" onchange="this.form.submit()">
+        <option value="ee">Select</option>
+
+        <% taskTypeArray.forEach(function(t){ %>
+          <option value="<%= t %>">
+            <%= t %>
+          </option>
+        <% }); %>
+
+        
+        <!-- <option value="home">Home</option>
+        <option value="school">School</option> -->
+      </select>
+    </form>
+
     <div class="main">
+
+      <h1>
+        <%= taskTypeName %>
+      </h2>
+
       <!-- Date -->
       <h2>
         <%= date %>
@@ -30,11 +52,14 @@
                 <%= task.name %>
             </span>
 
+            <!-- update form -->
             <form action="/updateTask" method="post" class="update-form">
+              <input type="hidden" name="taskType" value="<%= taskTypeName %>">
               <input type="text" name="task" value="<%= task.name %>">
               <button type="submit" name="button" value="<%= task._id %>">Save</button>
             </form>
 
+            <!-- delete button -->
             <a href="/delete/<%= task._id %>" class="delete-task">X</a>
           </li>
           <% }); %>
@@ -42,11 +67,13 @@
       <hr />
       <!-- form for adding task -->
       <form action="/" method="post">
+        <input type="hidden" name="taskType" value="<%= taskTypeName %>">
         <input type="text" name="taskName" id="" placeholder="task" autocomplete="off" autofocus/>
         <button type="submit">+</button>
       </form>
     </section>
     <script>
+
         function boxClick(elem){
             if(elem.checked){
                 elem.nextElementSibling.classList.add("cross-out");
