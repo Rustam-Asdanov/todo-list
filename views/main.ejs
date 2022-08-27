@@ -10,12 +10,12 @@
   <body>
 
     <form action="/" method="get">
-      <select name="taskType" onchange="this.form.submit()">
+      <select name="taskList" onchange="this.form.submit()">
         <option value="ee">Select</option>
 
-        <% taskTypeArray.forEach( function(t){ %>
-          <option value="<%= t %>">
-            <%= t %>
+        <% taskListArray.forEach( function(t){ %>
+          <option value="<%= t.name %>">
+            <%= t.name %>
           </option>
         <% }); %>
 
@@ -28,7 +28,7 @@
     <div class="main">
 
       <h1>
-        <%= taskTypeName %>
+        <%= taskListName %>
       </h2>
 
       <!-- Date -->
@@ -54,20 +54,20 @@
 
             <!-- update form -->
             <form action="/updateTask" method="post" class="update-form">
-              <input type="hidden" name="taskType" value="<%= taskTypeName %>">
+              <input type="hidden" name="taskList" value="<%= taskListName %>">
               <input type="text" name="task" value="<%= task.name %>">
               <button type="submit" name="button" value="<%= task._id %>">Save</button>
             </form>
 
             <!-- delete button -->
-            <a href="/delete/<%= task._id %>" class="delete-task">X</a>
+            <a href="/delete/<%= taskListName %>/<%= task._id %>" class="delete-task">X</a>
           </li>
           <% }); %>
       </ul>
       <hr />
       <!-- form for adding task -->
       <form action="/" method="post">
-        <input type="hidden" name="taskType" value="<%= taskTypeName %>">
+        <input type="hidden" name="taskList" value="<%= taskListName %>">
         <input type="text" name="taskName" id="" placeholder="task" autocomplete="off" autofocus/>
         <button type="submit">+</button>
       </form>

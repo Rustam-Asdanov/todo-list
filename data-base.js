@@ -1,8 +1,7 @@
 const mongoose = require("mongoose");
 module.exports = {
   addTask,
-  getAllTasks,
-  getAllTaskType,
+  getListArray,
   deleteTask,
   updateTask,
   updateTaskName,
@@ -17,37 +16,58 @@ mongoose.connect(
   }
 );
 
+// Models
 const taskSchema = new mongoose.Schema({
   name: String,
-  taskType: String,
   compleated: Boolean,
 });
 
 const Task = mongoose.model("Task", taskSchema);
 
-function addTask(taskName, taskTypeName) {
+const listSchema = new mongoose.Schema({
+  name: String,
+  items: [taskSchema],
+});
+
+const List = mongoose.model("List", listSchema);
+
+async function getListArray() {
+  let list = await List.find()
+    .exec()
+    .then((array) => {
+      return array;
+    });
+
+  if (list == "") {
+    const myList = new List({
+      name: "Work",
+    });
+
+    myList.save();
+    list = await List.find()
+      .exec()
+      .then((array) => {
+        return array;
+      });
+  }
+
+  return list;
+}
+
+function addTask(taskName, taskList) {
   const taskOne = new Task({
     name: taskName,
-    taskType: taskTypeName,
     compleated: false,
   });
 
-  taskOne.save();
-}
-
-async function getAllTasks(taskTypeName) {
-  let myTasks = await Task.find({ taskType: taskTypeName })
-    .exec()
-    .then((elem) => {
-      return elem;
-    });
-
-  return myTasks;
-}
-
-async function getAllTaskType() {
-  const myTaskType = await Task.find().distinct("taskType");
-  return myTaskType;
+  List.findOne({ name: taskList }, (err, foundList) => {
+    if (err) {
+      console.log(err);
+    } else {
+      foundList.items.push(taskOne);
+      foundList.save();
+    }
+  });
 }
 
 function deleteTask(taskId) {
@@ -80,6 +100,7 @@ function updateTaskName(taskId, taskName) {
   });
 }
 
+// for getting current Date
 function getCurrentDate() {
   const today = new Date();
   const weekday = new Array(

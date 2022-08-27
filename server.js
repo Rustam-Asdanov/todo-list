@@ -10,33 +10,38 @@ app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/", async (req, res) => {
-  let taskType = req.query.taskType;
-  if (taskType == undefined) {
-    taskType = "work";
+  let taskList = req.query.taskList;
+
+  if (taskList == undefined) {
+    taskList = "Today";
   }
-  const myArray = await dataBase.getAllTasks(taskType);
-  const myTaskTypeArray = await dataBase.getAllTaskType();
+
+  const myList = await dataBase.getListArray();
+
+  const myTasks = myList.filter((x) => x.name == taskList);
 
   res.render("main", {
     date: dataBase.getCurrentDate(),
-    tasks: myArray,
-    taskTypeArray: myTaskTypeArray,
-    taskTypeName: taskType,
+    tasks: myTasks[0].items,
+    taskListArray: myList,
+    taskListName: taskList,
   });
 });
 
+// add new task
 app.post("/", (req, res) => {
   const taskName = req.body.taskName;
-  const taskType = req.body.taskType;
-  dataBase.addTask(taskName, taskType);
-  res.redirect("/?taskType=" + taskType);
+  const taskList = req.body.taskList;
+  dataBase.addTask(taskName, taskList);
+  res.redirect("/?taskList=" + taskList);
 });
 
-app.get("/delete/:ID", (req, res) => {
+// delete element
+app.get("/delete/:taskList/:ID", (req, res) => {
+  const taskList = req.params.taskList;
   const deleteId = req.params.ID;
-  console.log(deleteId);
   dataBase.deleteTask(deleteId);
-  res.redirect("/");
+  res.redirect("/?taskList=" + taskList);
 });
 
 app.get("/update/:condition/:ID", (req, res) => {
@@ -49,9 +54,9 @@ app.get("/update/:condition/:ID", (req, res) => {
 app.post("/updateTask", (req, res) => {
   const taskId = req.body.button;
   const taskName = req.body.task;
-  const taskType = req.body.taskType;
+  const taskList = req.body.taskList;
   dataBase.updateTaskName(taskId, taskName);
-  res.redirect("/?taskType=" + taskType);
+  res.redirect("/?taskList=" + taskList);
 });
 
 app.listen(port, () => {
