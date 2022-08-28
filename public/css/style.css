@@ -16,6 +16,16 @@ body {
 
 body > form select {
   font-size: 1.4rem;
+  width: 140px;
+}
+
+body > form button {
+  background: transparent;
+  border-radius: 30px;
+}
+
+body > form button img {
+  cursor: pointer;
 }
 
 div.main {
@@ -67,7 +77,7 @@ form input[type="text"] {
   padding: 10px 0;
 }
 
-form button {
+.main form button {
   background-color: #067bff;
   padding: 5px 15px;
   font-size: x-large;
@@ -76,7 +86,7 @@ form button {
   transition: 500ms linear all;
 }
 
-form button:hover {
+.main form button:hover {
   background-color: rgb(60, 188, 60);
 }
 
@@ -92,11 +102,11 @@ a.delete-task {
   padding: 0 10px;
 }
 
-form.update-form {
+.main form.update-form {
   display: none;
 }
 
-form.update-form input,
+.main form.update-form input,
 form.update-form button {
   font-size: 0.8rem;
   text-align: center;

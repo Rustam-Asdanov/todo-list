@@ -9,9 +9,10 @@
   </head>
   <body>
 
+
     <form action="/" method="get">
       <select name="taskList" onchange="this.form.submit()">
-        <option value="ee">Select</option>
+        <option selected disabled>Select</option>
 
         <% taskListArray.forEach( function(t){ %>
           <option value="<%= t.name %>">
@@ -23,6 +24,20 @@
         <!-- <option value="home">Home</option>
         <option value="school">School</option> -->
       </select>
+
+      <br>
+
+      <button type="button" onclick="addNewList()">
+        <img src="https://img.icons8.com/office/40/000000/add--v1.png"/>
+      </button>
+
+      <button type="button" onclick="editListName()">
+        <img src="https://img.icons8.com/color/40/000000/pencil-tip.png"/>
+      </button>
+
+      <button type="button" onclick="removeList()">
+        <img src="https://img.icons8.com/office/40/000000/minus.png"/>
+      </button>
     </form>
 
     <div class="main">
@@ -74,13 +89,43 @@
     </section>
     <script>
 
+        function addNewList(){
+          const listName = prompt("Input name of new list");
+          if(listName === "" || listName == null){
+            alert("Fill input")
+          } else {
+            alert("Success");
+            window.open("/newList/"+listName, "_self");
+          }
+        }
+
+        function editListName(){
+          const listName = prompt("Input name of new list", "<%=taskListName%>");
+          if(listName === "" || listName == null){
+            alert("Fill input")
+          } else {
+            alert("Success");
+            window.open("/editListName/<%=taskListName%>/"+listName, "_self");
+          }
+        }
+
+        function removeList(){
+          const listName = "<%=taskListName%>";
+
+          if(listName === "Today"){
+            alert("You cann't delete this list!")
+          } else if(confirm("Are you sure?")){
+            window.open("/dropList/"+listName, "_self");
+          }
+        }
+
         function boxClick(elem){
             if(elem.checked){
                 elem.nextElementSibling.classList.add("cross-out");
-                window.open("/update/true/"+elem.value, "_self");
+                window.open("/update/true/<%=taskListName%>/"+elem.value, "_self");
             } else {
                 elem.nextElementSibling.classList.remove("cross-out");
-                window.open("/update/false/"+elem.value,"_self")
+                window.open("/update/false/<%=taskListName%>/"+elem.value,"_self")
             }
         }
 
