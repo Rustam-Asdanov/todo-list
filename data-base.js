@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const { ObjectId } = require("mongodb");
+const URL = require(__dirname + "/private-url.js");
 
 module.exports = {
   addTask,
@@ -13,13 +14,10 @@ module.exports = {
   editListName,
 };
 
-mongoose.connect(
-  "mongodb://127.0.0.1:27017/shopDB?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.5.1",
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }
-);
+mongoose.connect(URL.mongodbAtlassConnection, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 // Models
 const taskSchema = new mongoose.Schema({
@@ -77,20 +75,24 @@ async function dropList(listName) {
   await List.deleteOne({ name: listName });
 }
 
-function addTask(taskName, taskList) {
+async function addTask(taskName, taskList) {
   const taskOne = new Task({
     name: taskName,
     compleated: false,
   });
 
-  List.findOne({ name: taskList }, async (err, foundList) => {
-    if (err) {
-      console.log(err);
-    } else {
-      foundList.items.push(taskOne);
-      await foundList.save();
-    }
-  });
+  const myList = await List.findOne({ name: taskList });
+  myList.items.push(taskOne);
+  await myList.save();
+
+  // List.findOne({ name: taskList }, async (err, foundList) => {
+  //   if (err) {
+  //     console.log(err);
+  //   } else {
+  //     foundList.items.push(taskOne);
+  //     await foundList.save();
+  //   }
+  // });
 }
 
 // delete Task from database

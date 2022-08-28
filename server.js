@@ -12,13 +12,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.get("/", async (req, res) => {
   let taskList = req.query.taskList;
 
-  console.log(taskList + "  before");
-
   if (taskList == undefined || taskList === "none") {
     taskList = "Today";
   }
-
-  console.log(taskList + "  after");
 
   const myList = await dataBase.getListArray();
 
