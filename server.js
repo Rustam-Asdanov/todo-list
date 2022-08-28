@@ -3,7 +3,6 @@ const bodyParser = require("body-parser");
 const dataBase = require(__dirname + "/data-base.js");
 const app = express();
 const ejs = require("ejs");
-const port = 3000;
 
 app.set("view engine", "ejs");
 app.use(express.static("public"));
@@ -86,6 +85,11 @@ app.get("/dropList/:listName", async (req, res) => {
   }
   res.redirect("/?taskList=" + "Today");
 });
+
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 3000;
+}
 
 app.listen(port, () => {
   console.log(`Server listen on port ${port}`);
